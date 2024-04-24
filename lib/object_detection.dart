@@ -21,6 +21,12 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
   double scaleFactorWidth = 1;
   XFile? currentImageFile;
 
+  @override
+  void initState() {
+    super.initState();
+    width = widget.initialWidth;
+  }
+
   void _incrementCounter() async {
     width = widget.initialWidth;
     setState(() {
