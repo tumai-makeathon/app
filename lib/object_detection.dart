@@ -5,15 +5,15 @@ import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ObjectDetectionPage extends StatefulWidget {
+class ObjectDetectionCameraPage extends StatefulWidget {
   final double initialWidth;
-  const ObjectDetectionPage({super.key, required this.initialWidth});
+  const ObjectDetectionCameraPage({super.key, required this.initialWidth});
 
   @override
-  State<ObjectDetectionPage> createState() => _ObjectDetectionPageState();
+  State<ObjectDetectionCameraPage> createState() => _ObjectDetectionCameraPageState();
 }
 
-class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
+class _ObjectDetectionCameraPageState extends State<ObjectDetectionCameraPage> {
   double width = 100;
   double height = 100;
   List<DetectedObject> objects = [];
@@ -63,7 +63,7 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
     print("Objects: ${objects.length}");
     for (DetectedObject detectedObject in objects) {
 
-      final rect = detectedObject.boundingBox;
+      // final rect = detectedObject.boundingBox;
       final trackingId = detectedObject.trackingId;
 
       print("label($trackingId): ${detectedObject.labels}");

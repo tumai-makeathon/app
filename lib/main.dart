@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tum_ai/object_detection.dart';
-import 'package:tum_ai/position_detection.dart';
+import 'package:tum_ai/pose_detection_camera.dart';
+import 'package:tum_ai/pose_detection_image.dart';
 import 'face_detection.dart';
 import 'firebase_options.dart';
 
@@ -24,7 +21,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-enum ScreenSelection { face, object, pose }
+enum ScreenSelection { face, object, poseCamera, poseImage }
 
 extension ScreenSelectionExtension on ScreenSelection {
   String get name {
@@ -33,8 +30,10 @@ extension ScreenSelectionExtension on ScreenSelection {
         return 'Face Detection';
       case ScreenSelection.object:
         return 'Object Detection';
-      case ScreenSelection.pose:
+      case ScreenSelection.poseCamera:
         return 'Pose Detection';
+      case ScreenSelection.poseImage:
+        return 'Pose Detection Image';
     }
   }
 
@@ -44,8 +43,31 @@ extension ScreenSelectionExtension on ScreenSelection {
         return Icons.face;
       case ScreenSelection.object:
         return Icons.image_search;
-      case ScreenSelection.pose:
+      case ScreenSelection.poseCamera:
+        return Icons.sports_handball_outlined;
+      case ScreenSelection.poseImage:
         return Icons.person;
+    }
+  }
+
+  Widget Function(BuildContext) get page {
+    switch (this) {
+      case ScreenSelection.face:
+        return (context) => FaceDetectionPage(
+              initialWidth: MediaQuery.of(context).size.width,
+            );
+      case ScreenSelection.object:
+        return (context) => ObjectDetectionCameraPage(
+              initialWidth: MediaQuery.of(context).size.width,
+            );
+      case ScreenSelection.poseCamera:
+        return (context) => PoseDetectionCameraPage(
+              initialWidth: MediaQuery.of(context).size.width,
+            );
+      case ScreenSelection.poseImage:
+        return (context) => PoseDetectionImagePage(
+              initialWidth: MediaQuery.of(context).size.width,
+            );
     }
   }
 }
@@ -84,20 +106,18 @@ class _MyAppState extends State<MyApp> {
                 isSelected: _selectedScreen == ScreenSelection.object,
               ),
               SelectableIconButton(
-                screen: ScreenSelection.pose,
+                screen: ScreenSelection.poseCamera,
                 setSelectedScreen: setSelectedScreen,
-                isSelected: _selectedScreen == ScreenSelection.pose,
+                isSelected: _selectedScreen == ScreenSelection.poseCamera,
+              ),
+              SelectableIconButton(
+                screen: ScreenSelection.poseImage,
+                setSelectedScreen: setSelectedScreen,
+                isSelected: _selectedScreen == ScreenSelection.poseImage,
               ),
             ],
           ),
-          body: _selectedScreen == ScreenSelection.face
-              ? FaceDetectionPage(
-                  initialWidth: MediaQuery.of(context).size.width)
-              : _selectedScreen == ScreenSelection.object
-                  ? ObjectDetectionPage(
-                      initialWidth: MediaQuery.of(context).size.width)
-                  : PoseDetectionPage(
-                      initialWidth: MediaQuery.of(context).size.width)),
+          body: _selectedScreen.page(context)),
     );
   }
 }

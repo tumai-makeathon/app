@@ -1,25 +1,24 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
-class PoseDetectionPage extends StatefulWidget {
+class PoseDetectionCameraPage extends StatefulWidget {
   final double initialWidth;
-  const PoseDetectionPage({super.key, required this.initialWidth});
+  const PoseDetectionCameraPage({super.key, required this.initialWidth});
 
   @override
-  State<PoseDetectionPage> createState() => _PoseDetectionPageState();
+  State<PoseDetectionCameraPage> createState() => _PoseDetectionCameraPageState();
 }
 
-class _PoseDetectionPageState extends State<PoseDetectionPage> {
+class _PoseDetectionCameraPageState extends State<PoseDetectionCameraPage> {
   CameraController? _controller;
   List<CameraDescription>? _cameras;
   PoseDetector? _poseDetector;
   bool _isDetecting = false;
+  List<Pose> _lastPoses = [];
   List<Pose> _poses = [];
   double width = 100;
   double height = 100;
@@ -51,6 +50,8 @@ class _PoseDetectionPageState extends State<PoseDetectionPage> {
   }
 
   void _processCameraImage(CameraImage image) async {
+    height =image.height.toDouble();
+    width = image.width.toDouble();
     if (_isDetecting) return;
     _isDetecting = true;
 
@@ -64,7 +65,7 @@ class _PoseDetectionPageState extends State<PoseDetectionPage> {
         Size(image.width.toDouble(), image.height.toDouble());
 
     final InputImageRotation imageRotation =
-        InputImageRotation.rotation0deg; // Simplified for example
+        InputImageRotation.rotation90deg; // Simplified for example
 
     final inputImage = InputImage.fromBytes(
       bytes: bytes,
@@ -77,7 +78,9 @@ class _PoseDetectionPageState extends State<PoseDetectionPage> {
     );
 
     final List<Pose> poses = await _poseDetector!.processImage(inputImage);
+    if (!mounted) return;
     setState(() {
+      _lastPoses = _poses;
       _poses = poses;
     });
     _isDetecting = false;
@@ -98,13 +101,43 @@ class _PoseDetectionPageState extends State<PoseDetectionPage> {
       _controller!.value.isInitialized
           ? Stack(
               children: [
-                CameraPreview(_controller!),
-                ..._poses.map((pose) => CustomPaint(
-                      painter: PosePainter(
-                          pose: pose,
-                          imageSize: Size(_controller!.value.previewSize!.width,
-                              _controller!.value.previewSize!.height)),
-                    )),
+                SizedBox(
+                    width: width,
+                    height: height,
+                    child: CameraPreview(_controller!)),
+                ..._poses
+                    .expand((pose) => pose.landmarks.values
+                    .map((landmark) => Positioned(
+                  left: landmark.x * scaleFactorWidth - 5,
+                  top: landmark.y * scaleFactorHeight - 5,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment:
+                    MainAxisAlignment.start,
+                    crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: landmark.likelihood > 0.5
+                                  ? Colors.green
+                                  : Colors.red),
+                        ),
+                      ),
+                      Text(
+                        landmark.type
+                            .toString()
+                            .split(".")[1],
+                        style: TextStyle(fontSize: 6),
+                      ),
+                    ],
+                  ),
+                )))
+                    .toList(),
               ],
             )
           : const Center(child: CircularProgressIndicator()),
@@ -125,8 +158,11 @@ class PosePainter extends CustomPainter {
       ..strokeWidth = 2.0
       ..color = Colors.red;
 
-    for (final PoseLandmark landmark in pose.landmarks.values) {
-      canvas.drawCircle(Offset(landmark.x, landmark.y), 10, paint);
+    for (final PoseLandMarkType in pose.landmarks.keys) {
+      final landmark = pose.landmarks[PoseLandMarkType]!;
+
+      canvas.drawCircle(Offset(
+          landmark.x , landmark.y ), 10, paint);
     }
   }
 
