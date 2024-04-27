@@ -9,7 +9,6 @@ import 'package:tum_ai/forest_vision.dart';
 Color kDarkGreen = const Color(0xFF153c4b);
 Color kLightGreen = const Color(0xFF99c6bb);
 
-
 class ForestDetectionExample extends StatefulWidget {
   const ForestDetectionExample({Key? key}) : super(key: key);
 
@@ -25,24 +24,28 @@ class _ForestDetectionExampleState extends State<ForestDetectionExample> {
   List<Polygon> grid = [];
   Timer? timer;
   int currentPaintInteration = 0;
+  bool algoStarted = false;
 
   @override
   void initState() {
     super.initState();
-    startTimer();
   }
 
   void startTimer() async {
+    await Future.delayed(Duration(milliseconds: 1000));
     while (true) {
       if (currentPaintInteration >= gridSize * gridSize) {
         return;
       }
       paintGrid();
-      await Future.delayed(
-          Duration(milliseconds: doubleInRange(Random(), 200, 1000).toInt()));
       if (currentPaintInteration >= gridSize * gridSize) {
         break;
       }
+      await Future.delayed(
+          Duration(milliseconds: doubleInRange(Random(), 200, 1000).toInt()));
+      setState(() {
+        currentPaintInteration++;
+      });
     }
   }
 
@@ -95,9 +98,8 @@ class _ForestDetectionExampleState extends State<ForestDetectionExample> {
         ));
       }
     }
-    setState(() {
-      currentPaintInteration++;
-    });
+
+    setState(() {});
   }
 
   @override
@@ -111,8 +113,9 @@ class _ForestDetectionExampleState extends State<ForestDetectionExample> {
               Spacer(),
               Text(
                 "Forest Detection Example",
-                style: TextStyle(fontSize: 30, color: Colors.white),
+                style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
               ),
+              SizedBox(height: 30,),
               Container(
                 height: 400,
                 width: 400,
@@ -158,54 +161,83 @@ class _ForestDetectionExampleState extends State<ForestDetectionExample> {
                                   ),
                                   children: [
                                     backgroundMapLayer(),
-                                    PolygonLayer(
-                                      polygons: grid,
-                                    ),
+                                    algoStarted
+                                        ? PolygonLayer(
+                                            polygons: grid,
+                                          )
+                                        : Center(
+                                          child: MaterialButton(
+                                              color: kLightGreen,
+                                              onPressed: () {
+                                                if (!algoStarted) {
+                                                  setState(() {
+                                                    algoStarted = true;
+                                                  });
+                                                  startTimer();
+                                                }
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text(
+                                                  "Start Algorithm",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                        ),
                                   ],
                                 ),
                               ],
                             )))),
               ),
               Spacer(),
-              InkWell(
-                mouseCursor: MaterialStateMouseCursor.clickable,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ForestVision(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: kLightGreen,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: 200,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Look at the Product",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: kDarkGreen,
+              currentPaintInteration <= gridSize
+                  ? SizedBox(
+                      height: 40,
+                    )
+                  : InkWell(
+                      mouseCursor: MaterialStateMouseCursor.clickable,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ForestVision(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: kLightGreen,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 200,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Look at the Product",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: kDarkGreen,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: kDarkGreen,
+                                  )
+                                ],
                               ),
                             ),
-                            Icon(
-                              Icons.arrow_forward,
-                              color: kDarkGreen,)
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ),
               Spacer(),
             ],
           ),
