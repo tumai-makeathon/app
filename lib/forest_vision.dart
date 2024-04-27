@@ -41,8 +41,8 @@ class _ForestVisionState extends State<ForestVision> {
                       mapController: mapController,
                       options: MapOptions(
                         onTap: (pos, point) {
-                          addPointToPolyGon(point);
-                          setState(() {});
+                          // addPointToPolyGon(point);
+                          // setState(() {});
                           // mapController.
                         },
                         center: const LatLng(-8.830068, -57.049248),
