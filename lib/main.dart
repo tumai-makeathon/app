@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: ForestVision());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: ForestDetectionExample());
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

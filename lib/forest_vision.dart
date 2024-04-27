@@ -46,7 +46,7 @@ class _ForestVisionState extends State<ForestVision> {
                           // mapController.
                         },
                         center: const LatLng(-8.950068, -57.209248),
-                        zoom: 10.5,
+                        zoom: 10,
                       ),
                       children: [
                         backgroundMapLayer(),
