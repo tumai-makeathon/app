@@ -139,7 +139,7 @@ class _ForestVisionState extends State<ForestVision> {
                                     child: Image.asset("assets/logo.jpg")),
                               ),
                               const SizedBox(height: 20),
-                              const Text("Forest Vision",
+                              const Text("ForestVision",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 50,
@@ -149,6 +149,11 @@ class _ForestVisionState extends State<ForestVision> {
                                       color: Colors.white,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
+                              // Text("Index: $currentPolyGonIndex",
+                              //     style: const TextStyle(
+                              //         color: Colors.white,
+                              //         fontSize: 20,
+                              //         fontWeight: FontWeight.bold)),
                               // TextButton(
                               //     onPressed: () {
                               //       setState(() {
