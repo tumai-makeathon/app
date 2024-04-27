@@ -123,49 +123,47 @@ class _ForestDetectionExampleState extends State<ForestDetectionExample> {
                         padding: const EdgeInsets.all(8.0),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(25),
-                            child: Expanded(
-                              child: Stack(
-                                children: [
-                                  FlutterMap(
-                                    mapController: mapController,
-                                    options: MapOptions(
-                                      maxZoom: 15,
-                                      minZoom: 10,
-                                      // cameraConstraint: CameraConstraint.contain(
-                                      //   bounds: LatLngBounds(
-                                      //       LatLng(
-                                      //           center.latitude +
-                                      //               gridSize * gridStepSize,
-                                      //           center.longitude +
-                                      //               gridSize * gridStepSize),
-                                      //       LatLng(
-                                      //           center.latitude -
-                                      //               gridSize * gridStepSize,
-                                      //           center.longitude -
-                                      //               gridSize * gridStepSize)),
-                                      // ),
-                                      // no interaction given
-                                      interactiveFlags: InteractiveFlag.all,
-                                      onTap: (pos, point) {
-                                        setState(() {});
-                                        // mapController.
-                                      },
-                                      center: LatLng(
-                                          start.latitude +
-                                              0.5 * gridStepSize * gridSize,
-                                          start.longitude +
-                                              0.5 * gridStepSize * gridSize),
-                                      zoom: 14.0,
-                                    ),
-                                    children: [
-                                      backgroundMapLayer(),
-                                      PolygonLayer(
-                                        polygons: grid,
-                                      ),
-                                    ],
+                            child: Stack(
+                              children: [
+                                FlutterMap(
+                                  mapController: mapController,
+                                  options: MapOptions(
+                                    maxZoom: 15,
+                                    minZoom: 10,
+                                    // cameraConstraint: CameraConstraint.contain(
+                                    //   bounds: LatLngBounds(
+                                    //       LatLng(
+                                    //           center.latitude +
+                                    //               gridSize * gridStepSize,
+                                    //           center.longitude +
+                                    //               gridSize * gridStepSize),
+                                    //       LatLng(
+                                    //           center.latitude -
+                                    //               gridSize * gridStepSize,
+                                    //           center.longitude -
+                                    //               gridSize * gridStepSize)),
+                                    // ),
+                                    // no interaction given
+                                    interactiveFlags: InteractiveFlag.all,
+                                    onTap: (pos, point) {
+                                      setState(() {});
+                                      // mapController.
+                                    },
+                                    center: LatLng(
+                                        start.latitude +
+                                            0.5 * gridStepSize * gridSize,
+                                        start.longitude +
+                                            0.5 * gridStepSize * gridSize),
+                                    zoom: 14.0,
                                   ),
-                                ],
-                              ),
+                                  children: [
+                                    backgroundMapLayer(),
+                                    PolygonLayer(
+                                      polygons: grid,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             )))),
               ),
               Spacer(),
