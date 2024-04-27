@@ -176,37 +176,33 @@ class _ForestVisionState extends State<ForestVision> {
                                       color: Colors.white,
                                       fontSize: 50,
                                       fontWeight: FontWeight.bold)),
-                              Text("Index: $currentPolyGonIndex",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                              Text("Index: $currentPolyGonIndex",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                              TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      currentPolyGonIndex++;
-                                    });
-                                  },
-                                  child: const Text("Increment Index")),
-                              TextButton(
-                                  onPressed: () {
-                                    print(polyGonList);
-                                  },
-                                  child: const Text("Print PolyGon List")),
-                              TextButton(
-                                  child: const Text("Remove last point"),
-                                  onPressed: () {
-                                    if (polyGonList.length > 0) {
-                                      polyGonList[currentPolyGonIndex]
-                                          .removeLast();
-                                      setState(() {});
-                                    }
-                                  }),
+                              // Text("Index: $currentPolyGonIndex",
+                              //     style: const TextStyle(
+                              //         color: Colors.white,
+                              //         fontSize: 20,
+                              //         fontWeight: FontWeight.bold)),
+                              //
+                              // TextButton(
+                              //     onPressed: () {
+                              //       setState(() {
+                              //         currentPolyGonIndex++;
+                              //       });
+                              //     },
+                              //     child: const Text("Increment Index")),
+                              // TextButton(
+                              //     onPressed: () {
+                              //       print(polyGonList);
+                              //     },
+                              //     child: const Text("Print PolyGon List")),
+                              // TextButton(
+                              //     child: const Text("Remove last point"),
+                              //     onPressed: () {
+                              //       if (polyGonList.length > 0) {
+                              //         polyGonList[currentPolyGonIndex]
+                              //             .removeLast();
+                              //         setState(() {});
+                              //       }
+                              //     }),
                             ],
                           ),
                   ),
