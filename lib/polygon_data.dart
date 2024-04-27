@@ -2,6 +2,15 @@ import 'package:latlong2/latlong.dart';
 
 List<List<LatLng>> polygonData = [
   [
+    const LatLng(-8.998696, -57.391749),
+    const LatLng(-8.995138, -57.359114),
+    const LatLng(-8.991998, -57.32881),
+    const LatLng(-8.928362, -57.342372),
+    const LatLng(-8.936527, -57.413152),
+    const LatLng(-8.98551, -57.407642),
+    const LatLng(-8.984463, -57.394504)
+  ],
+  [
     const LatLng(-8.824977, -57.073404),
     const LatLng(-8.941033, -57.080117),
     const LatLng(-8.943179, -56.966403),
@@ -61,5 +70,46 @@ List<List<LatLng>> polygonData = [
   ]
 ];
 
-List<LatLng> problematicArea = [LatLng( -8.893337, -56.971615), LatLng( -8.890397, -56.974803), LatLng( -8.885777, -56.979905), LatLng( -8.884517, -56.984794), LatLng( -8.885987, -56.98777), LatLng( -8.886407, -56.990746), LatLng( -8.887037, -56.99436), LatLng( -8.889137, -56.99606), LatLng( -8.891237, -56.997761), LatLng( -8.892917, -56.997761), LatLng( -8.895648, -56.997974), LatLng( -8.897328, -56.997123), LatLng( -8.894808, -56.992659), LatLng( -8.894808, -56.992234), LatLng( -8.896488, -56.988408), LatLng( -8.900058, -56.990534), LatLng( -8.902158, -56.993297), LatLng( -8.905098, -56.996911), LatLng( -8.906358, -56.99606), LatLng( -8.906358, -56.993722), LatLng( -8.908038, -56.995423), LatLng( -8.910348, -56.995423), LatLng( -8.910558, -56.99436), LatLng( -8.908668, -56.990108), LatLng( -8.908668, -56.987558), LatLng( -8.908458, -56.983094), LatLng( -8.908458, -56.977992), LatLng( -8.910978, -56.976291), LatLng( -8.911818, -56.975016), LatLng( -8.908878, -56.971615), LatLng( -8.904258, -56.969489), LatLng( -8.897748, -56.969914)];
-LatLng infoPoint = LatLng(-8.898591, -56.980583);
+List<LatLng> warningArea = [
+  const LatLng(-8.893337, -56.971615),
+  const LatLng(-8.890397, -56.974803),
+  const LatLng(-8.885777, -56.979905),
+  const LatLng(-8.884517, -56.984794),
+  const LatLng(-8.885987, -56.98777),
+  const LatLng(-8.886407, -56.990746),
+  const LatLng(-8.887037, -56.99436),
+  const LatLng(-8.889137, -56.99606),
+  const LatLng(-8.891237, -56.997761),
+  const LatLng(-8.892917, -56.997761),
+  const LatLng(-8.895648, -56.997974),
+  const LatLng(-8.897328, -56.997123),
+  const LatLng(-8.894808, -56.992659),
+  const LatLng(-8.894808, -56.992234),
+  const LatLng(-8.896488, -56.988408),
+  const LatLng(-8.900058, -56.990534),
+  const LatLng(-8.902158, -56.993297),
+  const LatLng(-8.905098, -56.996911),
+  const LatLng(-8.906358, -56.99606),
+  const LatLng(-8.906358, -56.993722),
+  const LatLng(-8.908038, -56.995423),
+  const LatLng(-8.910348, -56.995423),
+  const LatLng(-8.910558, -56.99436),
+  const LatLng(-8.908668, -56.990108),
+  const LatLng(-8.908668, -56.987558),
+  const LatLng(-8.908458, -56.983094),
+  const LatLng(-8.908458, -56.977992),
+  const LatLng(-8.910978, -56.976291),
+  const LatLng(-8.911818, -56.975016),
+  const LatLng(-8.908878, -56.971615),
+  const LatLng(-8.904258, -56.969489),
+  const LatLng(-8.897748, -56.969914)
+];
+LatLng warningPoint = const LatLng(-8.898591, -56.980583);
+
+List<LatLng> problematicArea = [
+  const LatLng(-8.984672, -57.392596),
+  const LatLng(-8.980695, -57.360809),
+  const LatLng(-8.994301, -57.359537),
+  const LatLng(-8.99765, -57.390901)
+];
+LatLng problematicPoint = const LatLng(-8.988, -57.375);

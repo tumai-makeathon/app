@@ -41,12 +41,12 @@ class _ForestVisionState extends State<ForestVision> {
                       mapController: mapController,
                       options: MapOptions(
                         onTap: (pos, point) {
-                          // addPointToPolyGon(point);
-                          // setState(() {});
+                          addPointToPolyGon(point);
+                          setState(() {});
                           // mapController.
                         },
-                        center: const LatLng(-8.830068, -57.049248),
-                        zoom: 11.0,
+                        center: const LatLng(-8.950068, -57.209248),
+                        zoom: 10.5,
                       ),
                       children: [
                         backgroundMapLayer(),
@@ -85,20 +85,52 @@ class _ForestVisionState extends State<ForestVision> {
                                 points: problematicArea,
                                 color: Colors.redAccent.withOpacity(0.2),
                                 borderStrokeWidth: 2,
-                                borderColor: Colors.redAccent.withOpacity(0.9))
+                                borderColor: Colors.redAccent.withOpacity(0.9)),
+                            Polygon(
+                                isFilled: true,
+                                points: warningArea,
+                                color: Colors.orange.withOpacity(0.2),
+                                borderStrokeWidth: 2,
+                                borderColor: Colors.orange.withOpacity(0.9))
                           ],
                         ),
                         MarkerLayer(markers: [
                           Marker(
-                            point: infoPoint,
+                            point: warningPoint,
                             child: IconButton(
                                 onPressed: () {
                                   if (MediaQuery.of(context).size.width <
                                       phoneSizeCutOff) {
                                     showModalBottomSheet(
-                                      showDragHandle: true,
-                                      isScrollControlled: true,
-                                      backgroundColor: kBackground,
+                                        showDragHandle: true,
+                                        isScrollControlled: true,
+                                        backgroundColor: kBackground,
+                                        context: context,
+                                        enableDrag: true,
+                                        builder: (context) =>
+                                            const HistoricalDataPage());
+                                  }
+
+                                  setState(() {
+                                    showPage = !showPage;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.info,
+                                  color: Colors.orange.withOpacity(0.7),
+                                  size: 24,
+                                )),
+                          ),
+                          Marker(
+                            point: problematicPoint,
+                            child: IconButton(
+                                onPressed: () {
+                                  if (MediaQuery.of(context).size.width <
+                                      phoneSizeCutOff) {
+                                    showModalBottomSheet(
+                                        showDragHandle: true,
+                                        isScrollControlled: true,
+                                        backgroundColor: kBackground,
                                         context: context,
                                         enableDrag: true,
                                         builder: (context) =>
@@ -114,7 +146,7 @@ class _ForestVisionState extends State<ForestVision> {
                                   color: Colors.redAccent.withOpacity(0.7),
                                   size: 24,
                                 )),
-                          )
+                          ),
                         ])
                       ],
                     )),
@@ -149,32 +181,32 @@ class _ForestVisionState extends State<ForestVision> {
                                       color: Colors.white,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
-                              // Text("Index: $currentPolyGonIndex",
-                              //     style: const TextStyle(
-                              //         color: Colors.white,
-                              //         fontSize: 20,
-                              //         fontWeight: FontWeight.bold)),
-                              // TextButton(
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         currentPolyGonIndex++;
-                              //       });
-                              //     },
-                              //     child: const Text("Increment Index")),
-                              // TextButton(
-                              //     onPressed: () {
-                              //       print(polyGonList);
-                              //     },
-                              //     child: const Text("Print PolyGon List")),
-                              // TextButton(
-                              //     child: const Text("Remove last point"),
-                              //     onPressed: () {
-                              //       if (polyGonList.length > 0) {
-                              //         polyGonList[currentPolyGonIndex]
-                              //             .removeLast();
-                              //         setState(() {});
-                              //       }
-                              //     }),
+                              Text("Index: $currentPolyGonIndex",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                              TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      currentPolyGonIndex++;
+                                    });
+                                  },
+                                  child: const Text("Increment Index")),
+                              TextButton(
+                                  onPressed: () {
+                                    print(polyGonList);
+                                  },
+                                  child: const Text("Print PolyGon List")),
+                              TextButton(
+                                  child: const Text("Remove last point"),
+                                  onPressed: () {
+                                    if (polyGonList.length > 0) {
+                                      polyGonList[currentPolyGonIndex]
+                                          .removeLast();
+                                      setState(() {});
+                                    }
+                                  }),
                             ],
                           ),
                   ),
