@@ -19,7 +19,7 @@ class _ForestVisionState extends State<ForestVision> {
   // [[LatLng(-9.537428, -56.503603), LatLng( -9.454869,  -56.503998), LatLng( -9.417477,  -56.552564), LatLng( -9.481157,  -56.553748), LatLng( -9.483689,  -56.560855), LatLng( -9.504329,  -56.561448), LatLng( -9.499461,  -56.547431), LatLng( -9.504913,  -56.540718), LatLng( -9.537039,  -56.503406), LatLng( -9.454674,  -56.504591), LatLng( -9.416114,  -56.553353), LatLng( -9.483494,  -56.553748), LatLng( -9.505692,  -56.559276), LatLng( -9.500045,  -56.547036), LatLng( -9.508418,  -56.541113), LatLng( -9.526525,  -56.529071), LatLng( -9.53587,  -56.505183)]];
   int currentPolyGonIndex = 0;
   MapController mapController = MapController();
-  bool showPage = false;
+  String? currentFileString;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +41,8 @@ class _ForestVisionState extends State<ForestVision> {
                       mapController: mapController,
                       options: MapOptions(
                         onTap: (pos, point) {
-                          addPointToPolyGon(point);
-                          setState(() {});
+                          // addPointToPolyGon(point);
+                          // setState(() {});
                           // mapController.
                         },
                         center: const LatLng(-8.950068, -57.209248),
@@ -108,11 +108,11 @@ class _ForestVisionState extends State<ForestVision> {
                                         context: context,
                                         enableDrag: true,
                                         builder: (context) =>
-                                            const HistoricalDataPage());
+                                            const HistoricalDataPage(fileName: "cover_",));
                                   }
 
                                   setState(() {
-                                    showPage = !showPage;
+                                    currentFileString = currentFileString== "cover_" ? null : "cover_";
                                   });
                                 },
                                 icon: Icon(
@@ -134,11 +134,11 @@ class _ForestVisionState extends State<ForestVision> {
                                         context: context,
                                         enableDrag: true,
                                         builder: (context) =>
-                                            const HistoricalDataPage());
+                                            const HistoricalDataPage(fileName: "c_"));
                                   }
 
                                   setState(() {
-                                    showPage = !showPage;
+                                    currentFileString = currentFileString== "c_" ? null : "c_";
                                   });
                                 },
                                 icon: Icon(
@@ -157,8 +157,8 @@ class _ForestVisionState extends State<ForestVision> {
                 : Container(
                     width: 400,
                     color: kBackground,
-                    child: showPage
-                        ? const HistoricalDataPage()
+                    child: currentFileString != null
+                        ? HistoricalDataPage(fileName: currentFileString!)
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -235,11 +235,12 @@ TileLayer backgroundMapLayer() {
 }
 
 class HistoricalDataPage extends StatelessWidget {
-  const HistoricalDataPage({Key? key}) : super(key: key);
+  final String fileName;
+  const HistoricalDataPage({Key? key, required this.fileName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return  SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(32.0),
         child: Column(
@@ -253,9 +254,9 @@ class HistoricalDataPage extends StatelessWidget {
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
             ),
-            CoverImages(title: "2024", index: 3),
-            CoverImages(title: "2023", index: 2),
-            CoverImages(title: "2022", index: 1),
+            CoverImages(title: "2024", index: 3,imageName: fileName,),
+            CoverImages(title: "2023", index: 2,imageName: fileName,),
+            CoverImages(title: "2022", index: 1,imageName: fileName,),
           ],
         ),
       ),
@@ -274,7 +275,8 @@ String opentStreetMapUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 class CoverImages extends StatelessWidget {
   final String title;
   final int index;
-  const CoverImages({Key? key, required this.title, required this.index})
+  final String imageName;
+  const CoverImages({Key? key, required this.title, required this.index, required this.imageName})
       : super(key: key);
 
   @override
@@ -294,7 +296,7 @@ class CoverImages extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.asset("assets/cover_$index.png",
+                  child: Image.asset("assets/$imageName$index.png",
                       fit: BoxFit.fitWidth),
                 ),
               ),
