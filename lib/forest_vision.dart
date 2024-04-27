@@ -238,29 +238,29 @@ class HistoricalDataPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return  SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(32.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               fileName=="c_"?"Already Deforested Areas":"Predicted Areas of Deforestation",
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 12,),
+            const SizedBox(height: 12,),
             Text(
               fileName=="c_"?"These areas are already deforested":"These areas are in danger to be deforested soon",
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,),
             ),
-            SizedBox(height: 12,),
-            Divider(color: Colors.white,),
-            SizedBox(height: 12,),
-            Text(
+            const SizedBox(height: 12,),
+            const Divider(color: Colors.white,),
+            const SizedBox(height: 12,),
+            const Text(
               "Historical Data",
               style: TextStyle(
                   color: Colors.white,
