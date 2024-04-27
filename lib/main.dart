@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tum_ai/forest_detection_example.dart';
 import 'package:tum_ai/forest_vision.dart';
 import 'package:tum_ai/object_detection.dart';
 import 'package:tum_ai/pose_detection_camera.dart';
@@ -83,7 +84,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: ForestVision());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: ForestDetectionExample());
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
